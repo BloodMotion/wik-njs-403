@@ -18,7 +18,8 @@ app.use(bodyParser.json())
 // Populate DB json file
 dataBuilder = [
     { id: 1, name: 'Toto' },
-    { id: 2, name: 'Ma liste' }
+    { id: 2, name: 'Ma liste' },
+    { id: 3, name: 'Test courses' }
 ]
 courseList.splice(0)
 courseList.push.apply(courseList, dataBuilder)

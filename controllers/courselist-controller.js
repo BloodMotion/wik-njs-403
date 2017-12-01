@@ -42,7 +42,21 @@ router.post('/', (req, res, next) => {
 })
 
 router.delete('/', (req, res, next) => {
+    if (!req.body.name) {
+        return next(new BadRequestError('VALIDATION', 'Missing name'))
+    }
+
+    const name = req.body.name
+
     const result = find(courseListCollection, {name})
+    if (!result) {
+        return next(new BadRequestError('VALIDATION', 'Name not found'))
+    }
+
+    const listToDelete = result.id-1
+    courseListCollection.splice(listToDelete, 1)
+
+    res.json(courseListCollection)
 })
 
 module.exports = router
