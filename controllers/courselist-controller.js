@@ -8,7 +8,9 @@ const courseListCollection = db.courseList
 
 
 router.get('/', (req, res, next) => {
-    res.json(db);
+    //res.json(db);
+
+    res.json(courseListCollection['name']['Toto'])
     /*
     db.forEach(function(item){
         console.log(item);
@@ -24,14 +26,15 @@ router.post('/', (req, res, next) => {
     const name = req.body.name
 
     // Check for name uniqueness
-    const result = find(courseListCollection, {name})
-    if (result) {
+    const result_name = find(courseListCollection, {name})
+    if (result_name) {
         return next(new BadRequestError('VALIDATION', 'Name should be unique'))
     }
 
     const newCourseList = {
         id: courseListCollection.length + 1,
-        name
+        name,
+        cart:{}
     }
 
     courseListCollection.push(newCourseList)

@@ -6,6 +6,7 @@ const NotFoundError = require('./errors/not-found')
 const app = express()
 
 const courselistRouter = require('./controllers/courselist-controller')
+const courselisItemtRouter = require('./controllers/courselist-item-controller')
 const { courseList } = require('./data/db')
 
 app.use(bodyParser.urlencoded({extended: false}))
@@ -17,15 +18,16 @@ app.use(bodyParser.json())
 
 // Populate DB json file
 dataBuilder = [
-    { id: 1, name: 'Toto' },
-    { id: 2, name: 'Ma liste' },
-    { id: 3, name: 'Test courses' }
+    { id: 1, name: 'Toto', cart: {'Tomates': {flag: true}, 'Baguette': {flag: false}}},
+    { id: 2, name: 'Ma liste',  cart: {}},
+    { id: 3, name: 'Test courses',  cart: {}}
 ]
 courseList.splice(0)
 courseList.push.apply(courseList, dataBuilder)
 
 
 app.use('/course-lists', courselistRouter)
+app.use('/course-lists/items', courselisItemtRouter)
 
 app.use((req, res, next) => {
     return next(new NotFoundError())
