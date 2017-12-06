@@ -6,12 +6,36 @@ const {find} = require('lodash')
 const db = require('../data/db')
 const courseListCollection = db.courseList
 
+// Retrieving all course lists OR specified course list by his name (parameters courseListName) if specified
+router.get('/:courseListName?', (req, res, next) => {
+    if (!req.params.courseListName) {
+        res.json(db);
+        //res.json(courseListCollection);
+    }
 
-router.get('/', (req, res, next) => {
-    res.json(db);
-    //res.json(courseListCollection);
+    const name = req.params.courseListName
+    const resultList = find(courseListCollection, {name})
+
+    if (!resultList) {
+        return next(new BadRequestError('VALIDATION', 'Name not found'))
+    }
+
+    res.json(resultList);
 })
 
+// Retrieving items in given cart by course list name
+router.get('/:courseListName/cart', (req, res, next) => {
+    if (!req.params.courseListName) {
+        return next(new BadRequestError('VALIDATION', 'Missing name'))
+    }
+
+    const name = req.params.courseListName
+    const resultList = find(courseListCollection, {name})
+
+    res.json(resultList.cart);
+})
+
+// Create new course list
 router.post('/', (req, res, next) => {
     if (!req.body.name) {
         return next(new BadRequestError('VALIDATION', 'Missing name'))

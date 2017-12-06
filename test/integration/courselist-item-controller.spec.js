@@ -21,7 +21,7 @@ describe('CourselistController', () => {
     describe('When I modify a listCourse to put an item in cart (PUT /course-lists/items)', () => {
         it('should reject with a 400 when no name is given', () => {
             return request(app)
-                .put('/course-lists/items')
+                .post('/course-lists/items')
                 .send({item: 'Something'})
                 .then((res) => {
                     res.status.should.equal(400)
@@ -36,7 +36,7 @@ describe('CourselistController', () => {
 
         it('should reject with a 400 when no item is given', () => {
             return request(app)
-                .put('/course-lists/items')
+                .post('/course-lists/items')
                 .send({name: 'Toto'})
                 .then((res) => {
                     res.status.should.equal(400)
@@ -51,7 +51,7 @@ describe('CourselistController', () => {
 
         it('should reject when cart item is not unique', () => {
             return request(app)
-                .put('/course-lists/items')
+                .post('/course-lists/items')
                 .send({name: 'Toto', item: 'Tomatoes'})
                 .then((res) => {
                     res.status.should.equal(400)
