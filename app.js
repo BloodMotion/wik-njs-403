@@ -18,9 +18,9 @@ app.use(bodyParser.json())
 
 // Populate DB json file
 dataBuilder = [
-    { id: 1, name: 'Toto', cart: {'Tomates': {flag: true}, 'Baguette': {flag: false}}},
-    { id: 2, name: 'Ma liste',  cart: {}},
-    { id: 3, name: 'Test courses',  cart: {}}
+    { id: 1, name: 'Toto', cart: [{item: 'Tomatoes', flag: true}, {item: 'Baguette', flag: false}]},
+    { id: 2, name: 'Ma liste',  cart: []},
+    { id: 3, name: 'Test courses',  cart: []}
 ]
 courseList.splice(0)
 courseList.push.apply(courseList, dataBuilder)

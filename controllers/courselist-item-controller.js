@@ -14,27 +14,26 @@ router.put('/', (req, res, next) => {
     if (!req.body.item) {
         return next(new BadRequestError('VALIDATION', 'Missing item'))
     }
-
     const name = req.body.name
     const item = req.body.item
-    const listTarget = courseListCollection.name;
+    const result_list = find(courseListCollection, {name})
 
     // Check for uniqueness item cart
-    const result_item = find(listTarget, {item})
+    const result_item = find(result_list['cart'], {item})
     if (result_item) {
         return next(new BadRequestError('VALIDATION', 'Item should be unique'))
     }
 
     const itemList = {
-        item
+        item: item,
+        flag: false
     }
 
-    courseListCollection.cart.push(item)
+    result_list['cart'].push(itemList)
 
     res.json({
         data: itemList
     })
 })
-
 
 module.exports = router

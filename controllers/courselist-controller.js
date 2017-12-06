@@ -8,9 +8,8 @@ const courseListCollection = db.courseList
 
 
 router.get('/', (req, res, next) => {
-    //res.json(db);
+    res.json(db);
 
-    res.json(courseListCollection['name']['Toto'])
     /*
     db.forEach(function(item){
         console.log(item);
@@ -34,7 +33,7 @@ router.post('/', (req, res, next) => {
     const newCourseList = {
         id: courseListCollection.length + 1,
         name,
-        cart:{}
+        cart:[]
     }
 
     courseListCollection.push(newCourseList)

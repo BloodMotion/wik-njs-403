@@ -34,21 +34,6 @@ describe('CourselistController', () => {
                 })
         })
 
-        it('should reject with a 400 when no cart is given', () => {
-            return request(app)
-                .post('/course-lists')
-                .send({name: 'New list test'})
-                .then((res) => {
-                    res.status.should.equal(400)
-                    res.body.should.eql({
-                        error: {
-                            code: 'VALIDATION',
-                            message: 'Missing cart'
-                        }
-                    })
-                })
-        })
-
         it('should  succesfuly create a courseList', () => {
             const mockName = 'My New List'
             const mockCart = 'Tomatoes'
