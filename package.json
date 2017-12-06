@@ -8,6 +8,7 @@
     "dev": "nodemon app.js",
     "test": "mocha ./test/**/*.spec.js --reporter dot",
     "test-coverage": "nyc --reporter=text mocha ./test/**/*.spec.js",
+    "test-coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "test:watch": "mocha -w ./test/**/*.spec.js --reporter dot"
   },
   "author": "",
