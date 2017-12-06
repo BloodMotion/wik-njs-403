@@ -8,15 +8,8 @@ const courseListCollection = db.courseList
 
 
 router.get('/', (req, res, next) => {
-    //res.json(db);
-
-    res.json(courseListCollection);
-
-    /*
-    db.forEach(function(item){
-        console.log(item);
-    });
-    */
+    res.json(db);
+    //res.json(courseListCollection);
 })
 
 router.post('/', (req, res, next) => {
