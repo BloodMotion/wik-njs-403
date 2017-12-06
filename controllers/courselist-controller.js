@@ -8,7 +8,9 @@ const courseListCollection = db.courseList
 
 
 router.get('/', (req, res, next) => {
-    res.json(db);
+    //res.json(db);
+
+    res.json(courseListCollection);
 
     /*
     db.forEach(function(item){
@@ -55,8 +57,9 @@ router.delete('/', (req, res, next) => {
         return next(new BadRequestError('VALIDATION', 'Name not found'))
     }
 
-    const listToDelete = result.id-1
-    courseListCollection.splice(listToDelete, 1)
+    const idRealFromIdExist = courseListCollection.findIndex(c => c.id === result.id)
+
+    courseListCollection.splice(idRealFromIdExist, 1)
 
     res.json(courseListCollection)
 })

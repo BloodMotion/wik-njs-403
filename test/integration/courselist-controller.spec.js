@@ -22,7 +22,6 @@ describe('CourselistController', () => {
         it('should reject with a 400 when no name is given', () => {
             return request(app)
                 .post('/course-lists')
-                .send({cart: {'Tomatoes': {flag: true}}})
                 .then((res) => {
                     res.status.should.equal(400)
                     res.body.should.eql({
@@ -36,11 +35,10 @@ describe('CourselistController', () => {
 
         it('should  succesfuly create a courseList', () => {
             const mockName = 'My New List'
-            const mockCart = 'Tomatoes'
 
             return request(app)
                 .post('/course-lists')
-                .send({name: mockName, cart: mockCart})
+                .send({name: mockName})
                 .then((res) => {
                     res.status.should.equal(200)
                     expect(res.body.data).to.be.an('object')
