@@ -2,3 +2,16 @@ language: node_js
 node_js:
   - "lts/*"
   - "8"
+
+matrix:
+  fast_finish: true
+
+cache:
+  directories:
+    - node_modules
+
+before_install:
+  - npm prune
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash) -t 16889061-c2f4-4aba-8838-38d64b7c967d
