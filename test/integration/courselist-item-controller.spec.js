@@ -10,7 +10,7 @@ const app = require('../../app')
 
 const courseListFixture = require('../fixtures/courseList')
 
-describe('CourselistController', () => {
+describe('CourselistItemController', () => {
     beforeEach(() => {
         courseListFixture.up()
     })
@@ -18,7 +18,7 @@ describe('CourselistController', () => {
         courseListFixture.down()
     })
 
-    describe('When I modify a listCourse to put an item in cart (PUT /course-lists/items)', () => {
+    describe('When I modify a listCourse to add an item in cart (POST /course-lists/items)', () => {
         it('should reject with a 400 when no name is given', () => {
             return request(app)
                 .post('/course-lists/items')
@@ -61,6 +61,65 @@ describe('CourselistController', () => {
                             message: 'Item should be unique'
                         }
                     })
+                })
+        })
+    })
+
+    describe('When I modify an item in listCourse cart (PUT /course-lists/items)', () => {
+        it('should reject when courseList name is not specified', () => {
+            return request(app)
+                .put('/course-lists/items')
+                .send({item: 'Baguette', flag: true})
+                .then((res) => {
+                    res.status.should.equal(400)
+                    res.body.should.eql({
+                        error: {
+                            code: 'VALIDATION',
+                            message: 'Missing name'
+                        }
+                    })
+                })
+        })
+
+        it('should reject when item in courseList is not specified', () => {
+            return request(app)
+                .put('/course-lists/items')
+                .send({name: 'Toto', flag: true})
+                .then((res) => {
+                    res.status.should.equal(400)
+                    res.body.should.eql({
+                        error: {
+                            code: 'VALIDATION',
+                            message: 'Missing item'
+                        }
+                    })
+                })
+        })
+
+        it('should reject when flag for item in courseList is not specified', () => {
+            return request(app)
+                .put('/course-lists/items')
+                .send({name: 'Toto', item: 'Baguette'})
+                .then((res) => {
+                    res.status.should.equal(400)
+                    res.body.should.eql({
+                        error: {
+                            code: 'VALIDATION',
+                            message: 'Missing flag'
+                        }
+                    })
+                })
+        })
+
+        it('should successfully update a flag for a specified item in a given cart for a listCourse', () => {
+            return request(app)
+                .put('/course-lists/items')
+                .send({name: 'Toto', item: 'Baguette', flag: true})
+                .then((res) => {
+                    res.status.should.equal(200)
+                    const resultCourse = find(db.courseList, {name: 'Toto'})
+                    const resultItem = find(resultCourse['cart'], {item: 'Baguette'})
+                    resultItem.flag.should.be.true;
                 })
         })
     })

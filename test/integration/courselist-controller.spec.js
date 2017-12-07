@@ -18,6 +18,52 @@ describe('CourselistController', () => {
         courseListFixture.down()
     })
 
+    describe('When I get a courseList (GET /course-lists)', () => {
+        it('should return all courseList', () => {
+            return request(app)
+                .get('/course-lists')
+                .then((res) => {
+                    res.status.should.equal(200)
+                    res.body.should.be.an('object')
+                })
+        })
+
+        it('should reject with a 400 when no courseList matching with given name', () => {
+            const courseListName = 'Nonexistent list course';
+            return request(app)
+                .get('/course-lists/' + courseListName)
+                .then((res) => {
+                    res.status.should.equal(400)
+                    res.body.should.eql({
+                        error: {
+                            code: 'VALIDATION',
+                            message: 'Name not found'
+                        }
+                    })
+                })
+        })
+
+        it('should return the specified courseList for giving name', () => {
+            const courseListName = 'Toto';
+            return request(app)
+                .get('/course-lists/' + courseListName)
+                .then((res) => {
+                    res.status.should.equal(200)
+                    res.body.should.be.an('object').to.have.all.keys('id', 'name', 'cart')
+                })
+        })
+
+        it('should return the cart content for a listeCourse giving name', () => {
+            const courseListName = 'Toto';
+            return request(app)
+                .get('/course-lists/' + courseListName + '/cart')
+                .then((res) => {
+                    res.status.should.equal(200)
+                    res.body.should.be.an('array')
+                })
+        })
+    })
+
     describe('When I create a courseList (POST /course-lists)', () => {
         it('should reject with a 400 when no name is given', () => {
             return request(app)
@@ -35,7 +81,6 @@ describe('CourselistController', () => {
 
         it('should  succesfuly create a courseList', () => {
             const mockName = 'My New List'
-
             return request(app)
                 .post('/course-lists')
                 .send({name: mockName})
@@ -76,9 +121,10 @@ describe('CourselistController', () => {
                 .send({name: 'Toto'})
                 .then((res) => {
                     res.status.should.equal(200)
-                    const result = find(db.courseList, {name: 'Toto'})
-                    if(result)
-                    result.should.not.exist
+                    let result = false
+                    if(find(db.courseList, {name: 'Toto'}))
+                        result = true
+                    result.should.be.false
                 })
         })
     })
