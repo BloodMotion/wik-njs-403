@@ -54,4 +54,32 @@ describe('CourselistController', () => {
                 })
         })
     })
+
+    describe('When I delete a courseList (DELETE /course-lists)', () => {
+        it('should reject with a 400 when no name is given', () => {
+            return request(app)
+                .delete('/course-lists')
+                .then((res) => {
+                    res.status.should.equal(400)
+                    res.body.should.eql({
+                        error: {
+                            code: 'VALIDATION',
+                            message: 'Missing name'
+                        }
+                    })
+                })
+        })
+
+        it('should successfully delete a courseList', () => {
+            return request(app)
+                .delete('/course-lists')
+                .send({name: 'Toto'})
+                .then((res) => {
+                    res.status.should.equal(200)
+                    const result = find(db.courseList, {name: 'Toto'})
+                    if(result)
+                    result.should.not.exist
+                })
+        })
+    })
 })
