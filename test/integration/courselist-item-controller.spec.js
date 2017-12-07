@@ -111,6 +111,36 @@ describe('CourselistItemController', () => {
                 })
         })
 
+        it('should reject when courseList does not exist', () => {
+            return request(app)
+                .put('/course-lists/items')
+                .send({name: 'Nonexistant list', item: 'Baguette', flag: true})
+                .then((res) => {
+                    res.status.should.equal(400)
+                    res.body.should.eql({
+                        error: {
+                            code: 'VALIDATION',
+                            message: 'List does not exist'
+                        }
+                    })
+                })
+        })
+
+        it('should reject when item for giving courseList does not exist', () => {
+            return request(app)
+                .put('/course-lists/items')
+                .send({name: 'Toto', item: 'Spaghetti', flag: true})
+                .then((res) => {
+                    res.status.should.equal(400)
+                    res.body.should.eql({
+                        error: {
+                            code: 'VALIDATION',
+                            message: 'Item does not exist'
+                        }
+                    })
+                })
+        })
+
         it('should successfully update a flag for a specified item in a given cart for a listCourse', () => {
             return request(app)
                 .put('/course-lists/items')

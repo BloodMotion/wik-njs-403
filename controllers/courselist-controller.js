@@ -25,10 +25,6 @@ router.get('/:courseListName?', (req, res, next) => {
 
 // Retrieving items in given cart by course list name
 router.get('/:courseListName/cart', (req, res, next) => {
-    if (!req.params.courseListName) {
-        return next(new BadRequestError('VALIDATION', 'Missing name'))
-    }
-
     const name = req.params.courseListName
     const resultList = find(courseListCollection, {name})
 
