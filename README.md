@@ -23,7 +23,6 @@
 `npm run test-coveralls`
 
 #### User stories and features
-
 ![stories](https://img15.hostingpics.net/pics/5907504374904.png)
 
 ###### Sample mock data
