@@ -70,10 +70,10 @@
 ![stories](https://img15.hostingpics.net/pics/339920gl3.png)
 
 ###### GL-4 :
-![stories](https://img15.hostingpics.net/pics/274704gl4.png)
+![stories](https://img15.hostingpics.net/pics/585776gl4.png)
 
 ###### GL-4-bis :
-![stories](https://img15.hostingpics.net/pics/143866gl4bis.png)
+![stories](https://img15.hostingpics.net/pics/139179gl4bis.png)
 
 ###### GL-5 :
 ![stories](https://img15.hostingpics.net/pics/662651gl5.png)
