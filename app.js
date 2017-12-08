@@ -7,14 +7,11 @@ const app = express()
 
 const courselistRouter = require('./controllers/courselist-controller')
 const courselisItemtRouter = require('./controllers/courselist-item-controller')
+const httpErrorRouter = require('./controllers/http-error')
 const { courseList } = require('./data/db')
 
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
-
-// app.get('/', (req, res, next) => {
-//   req.send('OK')
-// })
 
 // Populate DB json file
 dataBuilder = [
@@ -28,6 +25,7 @@ courseList.push.apply(courseList, dataBuilder)
 
 app.use('/course-lists', courselistRouter)
 app.use('/course-lists/items', courselisItemtRouter)
+app.use('/http-error', httpErrorRouter)
 
 app.use((req, res, next) => {
     return next(new NotFoundError())

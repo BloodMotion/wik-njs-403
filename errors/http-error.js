@@ -7,7 +7,7 @@ module.exports = class HttpError extends Error {
   toJSON() {
     return {
       code: this.code || 'ServerError',
-      message: this.message || 'Unknown error occured'
+      message: this.message || 'Unknown error'
     }
   }
 }

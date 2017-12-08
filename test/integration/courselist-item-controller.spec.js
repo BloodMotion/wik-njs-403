@@ -63,6 +63,22 @@ describe('CourselistItemController', () => {
                     })
                 })
         })
+
+        it('should successfully add an item in ze cart for given courseList name', () => {
+            return request(app)
+                .post('/course-lists/items')
+                .send({name: 'Toto', item: 'Potatoes'})
+                .then((res) => {
+                    res.status.should.equal(200)
+                    res.body.should.eql({
+                        data: {
+                            item: 'Potatoes',
+                            flag: false
+                        }
+                    })
+                })
+        })
+
     })
 
     describe('When I modify an item in listCourse cart (PUT /course-lists/items)', () => {

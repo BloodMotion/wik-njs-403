@@ -79,6 +79,21 @@ describe('CourselistController', () => {
                 })
         })
 
+        it('should reject with a 400 when name exist', () => {
+            return request(app)
+                .post('/course-lists')
+                .send({name: 'Toto'})
+                .then((res) => {
+                    res.status.should.equal(400)
+                    res.body.should.eql({
+                        error: {
+                            code: 'VALIDATION',
+                            message: 'Name should be unique'
+                        }
+                    })
+                })
+        })
+
         it('should  succesfuly create a courseList', () => {
             const mockName = 'My New List'
             return request(app)
@@ -110,6 +125,21 @@ describe('CourselistController', () => {
                         error: {
                             code: 'VALIDATION',
                             message: 'Missing name'
+                        }
+                    })
+                })
+        })
+
+        it('should reject with a 400 name not found', () => {
+            return request(app)
+                .delete('/course-lists')
+                .send({name: 'Name that not exist'})
+                .then((res) => {
+                    res.status.should.equal(400)
+                    res.body.should.eql({
+                        error: {
+                            code: 'VALIDATION',
+                            message: 'Name not found'
                         }
                     })
                 })
